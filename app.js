@@ -6,6 +6,8 @@
 
 var express = require('express')
   , routes = require('./routes');
+var redis = require('redis');
+var client = redis.createClient();
 
 var app = module.exports = express.createServer();
 
@@ -30,8 +32,35 @@ app.configure('production', function(){
 });
 
 // Routes
+var statement;
+/*
+client.zrevrange(['links', 0, 0], function(error, responses) {
+	console.log(responses);
+	res.writeHead(200, {'Content-Type': 'text/html'});
+	res.end('The most awesome link is: ' + responses[0]);		
+});
+*/
+var count = 2;
 
 app.get('/', routes.index);
+app.get('/word/awesome', function(req, res) {
+	//get the count from redis
+	res.render('/word/awesome', {awesomeCount:count});
+});
+/*
+app.get('/word/awesome', function(req, res) {
+	//get the count from redis
+	client.zrevrange(['links', 0, 0], function(error, count) {
+		if (error) {
+					console.log (error);
+		}
+		else {
+			res.render('/word/awesome', {awesomeCount:count});
+		}	
+	});
+});
+*/
+app.get('/users/:user', routes.user);
 
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

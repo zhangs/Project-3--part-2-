@@ -20,7 +20,7 @@ http.createServer(function (req, res) {
 		'<br/> coolCount:' + responses[2] +  '<br/> radCount:' + responses[3] +
 		'<br/> groovyCount:' + responses[4]);		
 	});*/
-	
+		
 	client.zrevrange(['links', 0, 0], function(error, responses) {
 		console.log(responses);
 		res.writeHead(200, {'Content-Type': 'text/html'});
