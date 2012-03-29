@@ -43,10 +43,26 @@ client.zrevrange(['links', 0, 0], function(error, responses) {
 var count = 2;
 
 app.get('/', routes.index);
-app.get('/word/awesome', function(req, res) {
+/*app.get('/word/awesome', function(req, res) {
 	//get the count from redis
 	res.render('/word/awesome', {awesomeCount:count});
+});*/
+
+// Last resort if cannot get awesome.ejs to work
+app.get('/word/:word', function(req, res) { 
+	client.zrevrange([req.params.word, 0, 0], function(error, count) {
+		if (error) {
+					console.log (error);
+		}
+		else if (!count.length) {
+			res.send('Nothing yet!');
+		}
+		else {
+			res.send('The most ' + req.params.word + ' link is ' + count + '.');
+		}	
+	});
 });
+
 /*
 app.get('/word/awesome', function(req, res) {
 	//get the count from redis

@@ -30,7 +30,7 @@ var t = new twitter({
 t.stream(
 	'statuses/filter',
 	// no track parameter for statuses/links
-   { track: ['awesome', 'cool', 'rad', 'gnarly', 'groovy'] },
+   { track: ['awesome', 'cool', 'gnarly', 'bad', 'painful'] },
     function(stream) {
         stream.on('data', function(tweet) {
 			for(var i = 0; i < tweet.entities.urls.length; i++) {
@@ -39,21 +39,20 @@ t.stream(
 				//if awesome is in the tweet text, increment the counter
 				if(tweet.text.match(tweet.entities.urls[i].url && /awesome/)) {
 					//client.incr(tweet.entities.urls[i].url + ' and awesome');
-					client.zadd('links', 1, tweet.entities.urls[i].url + ' and awesome');
+					client.zadd('awesome', 1, tweet.entities.urls[i].url);
 				}
-				/*if(tweet.text.match(tweet.entities.urls[i].url && /cool/)) {
-					client.zadd('links', 1, tweet.entities.urls[i].url + ' and cool');
-				}
-				if(tweet.text.match(tweet.entities.urls[i].url && /rad/)) {
-					client.zadd('links', 1, tweet.entities.urls[i].url + ' and rad');
+				if(tweet.text.match(tweet.entities.urls[i].url && /cool/)) {
+					client.zadd('cool', 1, tweet.entities.urls[i].url);
 				}
 				if(tweet.text.match(tweet.entities.urls[i].url && /gnarly/)) {
-					client.zadd('links', 1, tweet.entities.urls[i].url + ' and gnarly');
+					client.zadd('gnarly', 1, tweet.entities.urls[i].url);
 				}
-				if(tweet.text.match(tweet.entities.urls[i].url && /groovy/)) {
-					client.zadd('links', 1, tweet.entities.urls[i].url + ' and groovy');
+				if(tweet.text.match(tweet.entities.urls[i].url && /bad/)) {
+					client.zadd('bad', 1, tweet.entities.urls[i].url);
 				}
-				*/
+				if(tweet.text.match(tweet.entities.urls[i].url && /painful/)) {
+					client.zadd('painful', 1, tweet.entities.urls[i].url);
+				}
 			}
         });
     }
