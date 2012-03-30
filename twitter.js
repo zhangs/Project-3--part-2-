@@ -36,9 +36,8 @@ t.stream(
 			for(var i = 0; i < tweet.entities.urls.length; i++) {
 				console.log(tweet.entities.urls[i]);
 				console.log(tweet.text);
-				//if awesome is in the tweet text, increment the counter
+				//if word is in the tweet text, increment counter of that link in that set
 				if(tweet.text.match(tweet.entities.urls[i].url && /awesome/)) {
-					//client.incr(tweet.entities.urls[i].url + ' and awesome');
 					client.zadd('awesome', 1, tweet.entities.urls[i].url);
 				}
 				if(tweet.text.match(tweet.entities.urls[i].url && /cool/)) {
@@ -56,29 +55,4 @@ t.stream(
 			}
         });
     }
-
-/*    'statuses/filter',
-    { track: ['awesome', 'cool', 'rad', 'gnarly', 'groovy'] },
-    function(stream) {
-        stream.on('data', function(tweet) {
-            console.log(tweet.text);
-            //if awesome is in the tweet text, increment the counter                                                                                                                                                                        
-            if(tweet.text.match(/awesome/)) {
-                client.incr('awesome');
-            }
-            if(tweet.text.match(/cool/)) {
-                client.incr('cool');
-            }
-            if(tweet.text.match(/rad/)) {
-                client.incr('rad');
-            }
-            if(tweet.text.match(/gnarly/)) {
-                client.incr('gnarly');
-            }
-            if(tweet.text.match(/groovy/)) {
-                client.incr('groovy');
-            }			
-        });
-    }
-	*/
 );

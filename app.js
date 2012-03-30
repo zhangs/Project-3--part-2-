@@ -32,22 +32,8 @@ app.configure('production', function(){
 });
 
 // Routes
-var statement;
-/*
-client.zrevrange(['links', 0, 0], function(error, responses) {
-	console.log(responses);
-	res.writeHead(200, {'Content-Type': 'text/html'});
-	res.end('The most awesome link is: ' + responses[0]);		
-});
-*/
-var count = 2;
 
 app.get('/', routes.index);
-/*app.get('/word/awesome', function(req, res) {
-	//get the count from redis
-	res.render('word/awesome', {awesomeCount:count});
-});*/
-
 app.get('/word/:word', function(req, res) {
 	//get the count from redis
 	client.zrevrange([req.params.word, 0, 0], function(error, linkresult) {
@@ -62,23 +48,6 @@ app.get('/word/:word', function(req, res) {
 		}	
 	});
 });
-
-// Last resort if cannot get awesome.ejs to work
-/*app.get('/word/:word', function(req, res) { 
-	client.zrevrange([req.params.word, 0, 0], function(error, count) {
-		if (error) {
-					console.log (error);
-		}
-		else if (!count.length) {
-			res.send('Nothing yet!');
-		}
-		else {
-			res.send('The most ' + req.params.word + ' link is ' + count + '.');
-		}	
-	});
-});
-*/
-app.get('/users/:user', routes.user);
 
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
