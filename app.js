@@ -78,19 +78,6 @@ app.get('/word/:word', function(req, res) {
 	});
 });
 */
-/*
-app.get('/word/awesome', function(req, res) {
-	//get the count from redis
-	client.zrevrange(['links', 0, 0], function(error, count) {
-		if (error) {
-					console.log (error);
-		}
-		else {
-			res.render('/word/awesome', {awesomeCount:count});
-		}	
-	});
-});
-*/
 app.get('/users/:user', routes.user);
 
 app.listen(3000);
