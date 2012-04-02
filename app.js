@@ -13,6 +13,9 @@ var client = redis.createClient();
 var TwitterWorker = require('./twitter.js');
 var t = new TwitterWorker();
 
+// using socket.io
+// var io = require('socket.io');
+
 var app = module.exports = express.createServer();
 
 // Configuration
@@ -55,3 +58,18 @@ app.get('/word/:word', function(req, res) {
 
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+
+// using socket.io
+/*
+// Site does not need it
+var sockets = io.listen(app);
+
+sockets.on('connection', function (socket) {
+    listener.subscribe('update')
+    listener.on('message', function(channel, msg) {
+console.log(msg);
+var message = JSON.parse(msg);
+socket.emit('update', {link:message.linkresult, key:message.key, count: message.count });
+    });
+});
+*/
