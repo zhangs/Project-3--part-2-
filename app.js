@@ -9,6 +9,10 @@ var express = require('express')
 var redis = require('redis');
 var client = redis.createClient();
 
+// Starts twitter module
+var TwitterWorker = require('./twitter.js');
+var t = new TwitterWorker();
+
 var app = module.exports = express.createServer();
 
 // Configuration

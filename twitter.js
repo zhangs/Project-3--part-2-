@@ -1,9 +1,11 @@
 // redis-cli
 
+var http = require('http');
 var twitter = require('ntwitter');
 var redis = require('redis');
 var credentials = require('./credentials.js');
 
+function TwitterWorker() {
 //create redis client                                                                                                                                                                                                                       
 var client = redis.createClient();
 
@@ -56,3 +58,6 @@ t.stream(
         });
     }
 );
+};
+
+module.exports = TwitterWorker;
