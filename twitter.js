@@ -32,7 +32,7 @@ var t = new twitter({
 t.stream(
 	'statuses/filter',
 	// no track parameter for statuses/links
-   { track: ['awesome', 'cool', 'gnarly', 'bad', 'painful'] },
+   { track: ['awesome', 'cool', 'gnarly', 'bad', 'painful', 'lovely', 'interesting'] },
     function(stream) {
         stream.on('data', function(tweet) {
 			for(var i = 0; i < tweet.entities.urls.length; i++) {
@@ -54,6 +54,12 @@ t.stream(
 				if(tweet.text.match(tweet.entities.urls[i].url && /painful/)) {
 					client.zadd('painful', 1, tweet.entities.urls[i].url);
 				}
+				if(tweet.text.match(tweet.entities.urls[i].url && /lovely/)) {
+					client.zadd('lovely', 1, tweet.entities.urls[i].url);
+				}
+				if(tweet.text.match(tweet.entities.urls[i].url && /interesting/)) {
+					client.zadd('interesting', 1, tweet.entities.urls[i].url);
+				}				
 			}
         });
     }
